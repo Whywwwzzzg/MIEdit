@@ -1,0 +1,11 @@
+torch
+torchvision
+diffusers
+transformers
+accelerate
+numpy
+pillow
+torchmetrics
+lpips
+tqdm
+
