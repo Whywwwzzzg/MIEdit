@@ -2,7 +2,7 @@
 
 Official code for **Multi-History-Step SDE Inversion for Image Editing with Superior Regional Awareness**.
 
-MIEdit is a training-free image editing framework based on SDE inversion. It combines a predictor-corrector multi-history-step inversion scheme with Inversion-Time Automatic Semantic Angle Masking (IASM) for efficient editing and improved non-edited region preservation.
+In recent years, diffusion stochastic differential equation (SDE) inversion and inversion-free methods have become prevalent for training-free image editing, as they can achieve faithful reconstruction without tuning. However, existing approaches remain inefficient, exhibit limited plasticity, and struggle to accurately preserve unedited regions. To address these issues, we propose MIEdit, a training-free editing framework based on SDE inversion. MIEdit introduces a predictor-corrector multi-history-step scheme to achieve superior editing quality with fewer steps. We further mitigate heterogeneity and conflict between the multi-conditioned noise residuals and gradient terms during sampling, improving stability and editing plasticity under large edits. MIEdit also includes Inversion-Time Automatic Semantic Angle Masking (IASM); it leverages classifier-free guidance to automatically generate semantic angle masks during inversion and applies them throughout the sampling process for regional constraints, without extra user inputs. We additionally construct EditEval++ (30 fine-grained tasks, 1,000+ image-text-mask triplets) for comprehensive evaluation; experiments show that MIEdit outperforms state-of-the-art techniques. Project page: <https://whywwwzzzg.github.io/MIEdit/>.
 
 ## Files
 
@@ -34,4 +34,3 @@ python run_pie_bench.py --help
 The project page is available at <https://whywwwzzzg.github.io/MIEdit/>.
 
 The source files are in `docs/` and are deployed with GitHub Pages.
-
