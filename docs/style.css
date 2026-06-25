@@ -179,13 +179,6 @@ figure img {
   background: white;
 }
 
-.figure-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
-  align-items: start;
-}
-
 figure {
   margin: 0;
 }
@@ -212,7 +205,4 @@ figcaption {
     padding-top: 52px;
   }
 
-  .figure-grid {
-    grid-template-columns: 1fr;
-  }
 }

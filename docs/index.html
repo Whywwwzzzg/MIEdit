@@ -13,7 +13,7 @@
       <nav aria-label="Primary navigation">
         <a href="#abstract">Abstract</a>
         <a href="#introduction">Introduction</a>
-        <a href="#results">Results</a>
+        <a href="#examples">Examples</a>
       </nav>
     </header>
 
@@ -24,7 +24,7 @@
           <h1>Multi-History-Step SDE Inversion for Image Editing with Superior Regional Awareness</h1>
           <p class="subtitle">A training-free image editing framework with efficient SDE inversion and inversion-time semantic region control.</p>
           <p class="authors">Haiyan Wei, Yunlong Wang, Huaibo Huang, Zhenan Sun, Kunbo Zhang</p>
-          <p class="affiliations">NLPR, Institute of Automation, Chinese Academy of Sciences · University of Chinese Academy of Sciences</p>
+          <p class="affiliations">NLPR, Institute of Automation, Chinese Academy of Sciences &middot; University of Chinese Academy of Sciences</p>
           <div class="actions">
             <a class="button primary" href="https://github.com/Whywwwzzzg/MIEdit" target="_blank" rel="noreferrer">Code</a>
           </div>
@@ -34,7 +34,7 @@
       <section class="teaser" aria-labelledby="teaser-title">
         <div class="container">
           <h2 id="teaser-title">Overview</h2>
-          <img src="assets/teaser.svg" alt="Qualitative editing examples comparing different methods and settings.">
+          <img src="assets/pipeline.svg" alt="Pipeline overview of MIEdit.">
         </div>
       </section>
 
@@ -62,19 +62,13 @@
         </div>
       </section>
 
-      <section id="results" class="band">
+      <section id="examples" class="band">
         <div class="container">
-          <h2>Benchmark and Regional Control</h2>
-          <div class="figure-grid">
-            <figure>
-              <img src="assets/benchmark.svg" alt="EditEval++ benchmark overview.">
-              <figcaption>EditEval++ covers 30 fine-grained editing tasks with diverse image-text-mask triplets.</figcaption>
-            </figure>
-            <figure>
-              <img src="assets/localization.svg" alt="Comparison of localization strategies.">
-              <figcaption>IASM provides inversion-time semantic region control without extra user inputs.</figcaption>
-            </figure>
-          </div>
+          <h2>Qualitative Results</h2>
+          <figure>
+            <img src="assets/qualitative.svg" alt="Qualitative image editing results produced by MIEdit.">
+            <figcaption>MIEdit performs faithful image editing while preserving non-target regions.</figcaption>
+          </figure>
         </div>
       </section>
     </main>
