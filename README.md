@@ -31,5 +31,7 @@ python run_pie_bench.py --help
 
 ## Project Page
 
-The project page is in `docs/index.html`. After enabling GitHub Pages for this repository, it can be served from the `docs/` directory.
+The project page is available at <https://whywwwzzzg.github.io/MIEdit/>.
+
+The source files are in `docs/` and are deployed with GitHub Pages.
 
