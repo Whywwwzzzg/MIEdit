@@ -25,8 +25,14 @@ The code expects a CUDA-enabled PyTorch environment and local access to the requ
 
 ## Example
 
+Use `--model_path` to specify your local Stable Diffusion 3.5 checkpoint directory. For example:
+
 ```bash
-python run_pie_bench.py --help
+python run_pie_bench.py \
+  --model_path /path/to/stable-diffusion-3.5-medium \
+  --source_path /path/to/PIE-Bench_v1 \
+  --target_path outputs/MIEdit_SD3.5 \
+  --clip_model_path /path/to/clip-vit-large-patch14
 ```
 
 ## Benchmark
