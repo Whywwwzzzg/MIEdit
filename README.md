@@ -23,6 +23,11 @@ pip install -r requirements.txt
 
 The code expects a CUDA-enabled PyTorch environment and local access to the required diffusion and CLIP model checkpoints.
 
+## Downloads
+
+- Stable Diffusion 3.5 Medium: download from the Hugging Face model page <https://huggingface.co/stabilityai/stable-diffusion-3.5-medium>. You may need to log in and accept the Stability AI license before downloading the model files.
+- PIE-Bench: download/register from the official PIE-Bench form <https://forms.gle/hVMkTABb4uvZVjme9>.
+
 ## Example
 
 Use `--model_path` to specify your local Stable Diffusion 3.5 checkpoint directory. For example:
