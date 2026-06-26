@@ -47,12 +47,29 @@ def normalize_relative_path(path_value):
     return path_value.lstrip("/")
 
 
+def is_absolute_path_value(path_value):
+    if not path_value:
+        return False
+    path_text = str(path_value)
+    return Path(path_text).is_absolute() or path_text.startswith(("/", "\\")) or (
+        len(path_text) > 1 and path_text[1] == ":"
+    )
+
+
+def get_manifest_image_path(item):
+    for key in ("image_path", "image_relative_path", "copied_to"):
+        value = item.get(key)
+        if value and not is_absolute_path_value(value):
+            return value
+    return item.get("image_path") or item.get("image_relative_path") or item.get("copied_to")
+
+
 def resolve_image_path(item, dataset_root):
     candidates = []
 
-    copied_to = normalize_relative_path(item.get("copied_to"))
-    if copied_to:
-        candidates.append(dataset_root / copied_to)
+    image_path = normalize_relative_path(get_manifest_image_path(item))
+    if image_path:
+        candidates.append(dataset_root / image_path)
 
     original_copied_to = normalize_relative_path(item.get("original_copied_to"))
     if original_copied_to:
