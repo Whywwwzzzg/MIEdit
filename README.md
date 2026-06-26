@@ -10,6 +10,7 @@ In recent years, diffusion stochastic differential equation (SDE) inversion and 
 - `custom_attention_processor.py`: SD3 attention processors, feature hooks, and KV replacement utilities.
 - `scheduling_sasolver.py`: SA-Solver scheduler used by the editing pipeline.
 - `run_pie_bench.py`: PIE-Bench evaluation entry point.
+- `run_editevalpp.py`: EditEval++ generation entry point using the same default hyperparameters as PIE-Bench.
 - `matric_calculator.py`: Metric computation utilities.
 - `docs/`: Project page for GitHub Pages.
 
@@ -39,6 +40,15 @@ python run_pie_bench.py \
   --source_path /path/to/PIE-Bench_v1 \
   --target_path outputs/MIEdit_SD3.5 \
   --clip_model_path /path/to/clip-vit-large-patch14
+```
+
+For EditEval++, use the merged manifest to index samples:
+
+```bash
+python run_editevalpp.py \
+  --model_path /path/to/stable-diffusion-3.5-medium \
+  --manifest_path /path/to/MERGED_DATASET_LATEST2/merged_manifest.json \
+  --target_path outputs/MIEdit_EditEvalPP
 ```
 
 ## Project Page
