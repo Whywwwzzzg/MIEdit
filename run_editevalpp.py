@@ -76,12 +76,8 @@ def resolve_image_path(item, dataset_root):
 
 
 def get_output_relative_path(item, image_path):
-    copied_to = normalize_relative_path(item.get("copied_to"))
-    if copied_to:
-        return copied_to
-
     edit_type = item.get("edit_type") or "unknown"
-    filename = item.get("new_filename") or image_path.name
+    filename = item.get("new_filename") or f"{item.get('unified_id', image_path.stem)}{image_path.suffix}"
     return f"{edit_type}/{filename}"
 
 
@@ -133,6 +129,8 @@ def main():
     parser.add_argument("--cleanup_interval", type=int, default=0)
     parser.add_argument("--metadata_path", type=str, default=None,
                         help="JSONL path for processed sample metadata. Defaults to target_path/run_manifest.jsonl")
+    parser.add_argument("--log_prefix", type=str, default=None,
+                        help="Prefix for each log line. Defaults to the target directory name")
     args = parser.parse_args()
 
     manifest_path = Path(args.manifest_path).expanduser().resolve()
@@ -141,6 +139,10 @@ def main():
     image_root = target_root / "annotation_images"
     mask_root = target_root / "masks"
     metadata_path = Path(args.metadata_path).expanduser().resolve() if args.metadata_path else target_root / "run_manifest.jsonl"
+    log_prefix = args.log_prefix if args.log_prefix is not None else f"[{target_root.name}] "
+
+    def log(message=""):
+        print(f"{log_prefix}{message}", flush=True)
 
     manifest = load_manifest(manifest_path)
     if args.edit_type_list:
@@ -153,11 +155,11 @@ def main():
     items = manifest[start_idx:end_idx]
 
     mask_feature_layers = parse_mask_feature_layers(args.mask_feature_layers)
-    print(f"Manifest: {manifest_path}")
-    print(f"Dataset root: {dataset_root}")
-    print(f"Output root: {target_root}")
-    print(f"Samples: {len(items)} (index {start_idx} to {end_idx})")
-    print(f"Using mask feature layers: {mask_feature_layers}")
+    log(f"Manifest: {manifest_path}")
+    log(f"Dataset root: {dataset_root}")
+    log(f"Output root: {target_root}")
+    log(f"Samples: {len(items)} (index {start_idx} to {end_idx})")
+    log(f"Using mask feature layers: {mask_feature_layers}")
 
     set_deterministic(seed=args.generator_seed, enable=not args.disable_deterministic)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -173,8 +175,9 @@ def main():
 
     for local_idx, item in enumerate(items, start=start_idx):
         unified_id = item.get("unified_id") or f"sample_{local_idx:06d}"
-        print(f"\n{'=' * 60}")
-        print(f"Processing [{local_idx + 1}/{len(manifest)}] {unified_id}")
+        log("")
+        log("=" * 60)
+        log(f"Processing [{local_idx + 1}/{len(manifest)}] {unified_id}")
 
         try:
             image_path = resolve_image_path(item, dataset_root)
@@ -185,7 +188,7 @@ def main():
             mask_path.parent.mkdir(parents=True, exist_ok=True)
 
             if args.skip_existing and out_path.exists():
-                print(f"Skipping existing output: {out_path}")
+                log(f"Skipping existing output: {out_path}")
                 continue
 
             source_prompt = clean_prompt(item.get(args.source_prompt_field))
@@ -197,9 +200,11 @@ def main():
                     f"{args.target_prompt_field}={target_prompt!r}"
                 )
 
-            print(f"  Image: {image_path}")
-            print(f"  Source prompt: {source_prompt}")
-            print(f"  Target prompt: {target_prompt}")
+            log(f"  Image: {image_path}")
+            log(f"  Output image: {out_path}")
+            log(f"  Output mask:  {mask_path}")
+            log(f"  Source prompt: {source_prompt}")
+            log(f"  Target prompt: {target_prompt}")
 
             imagein = Image.open(image_path).convert("RGB")
             imagein.thumbnail((args.width, args.height), Image.Resampling.LANCZOS)
@@ -232,9 +237,9 @@ def main():
 
             output_image.save(out_path)
             has_mask = save_mask(result.get("editing_mask"), mask_path)
-            print(f"  Saved image: {out_path}")
+            log(f"  Saved image: {out_path}")
             if has_mask:
-                print(f"  Saved mask:  {mask_path}")
+                log(f"  Saved mask:  {mask_path}")
 
             rows.append({
                 "index": local_idx,
@@ -256,10 +261,10 @@ def main():
                 if torch.cuda.is_available():
                     torch.cuda.empty_cache()
                 write_jsonl(metadata_path, rows)
-                print(f"  Periodic cleanup and metadata save at sample {success_count}")
+                log(f"  Periodic cleanup and metadata save at sample {success_count}")
 
         except Exception as exc:
-            print(f"Error processing {unified_id}: {exc}")
+            log(f"Error processing {unified_id}: {exc}")
             import traceback
             traceback.print_exc()
             gc.collect()
@@ -268,11 +273,12 @@ def main():
             continue
 
     write_jsonl(metadata_path, rows)
-    print("\n" + "=" * 60)
-    print(f"Processing complete. Successful samples: {success_count}")
-    print(f"Images saved to: {image_root}")
-    print(f"Masks saved to: {mask_root}")
-    print(f"Metadata saved to: {metadata_path}")
+    log("")
+    log("=" * 60)
+    log(f"Processing complete. Successful samples: {success_count}")
+    log(f"Images saved to: {image_root}")
+    log(f"Masks saved to: {mask_root}")
+    log(f"Metadata saved to: {metadata_path}")
 
     del pipe
     gc.collect()

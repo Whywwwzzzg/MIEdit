@@ -51,6 +51,12 @@ python run_editevalpp.py \
   --target_path outputs/MIEdit_EditEvalPP
 ```
 
+For multi-GPU parallel runs, launch one process per GPU with different index ranges and redirect logs separately:
+
+```bash
+CUDA_VISIBLE_DEVICES=4 python run_editevalpp.py --manifest_path /path/to/MERGED_DATASET_LATEST2/merged_manifest.json --start_idx 0 --end_idx 290 --target_path outputs/gpu4 > logs/gpu4.log 2>&1 &
+```
+
 ## Project Page
 
 The project page is available at <https://whywwwzzzg.github.io/MIEdit/>.
