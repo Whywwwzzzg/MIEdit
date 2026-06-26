@@ -108,10 +108,21 @@ h1 {
   font-weight: 700;
 }
 
+.authors sup {
+  font-size: 70%;
+  line-height: 0;
+}
+
 .affiliations {
   margin: 0;
   color: var(--muted);
   font-size: 17px;
+}
+
+.corresponding {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 15px;
 }
 
 .actions {
