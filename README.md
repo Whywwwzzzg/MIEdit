@@ -29,6 +29,10 @@ The code expects a CUDA-enabled PyTorch environment and local access to the requ
 python run_pie_bench.py --help
 ```
 
+## Benchmark
+
+EditEval++ is available at <https://drive.google.com/file/d/1d1ekSATh2LWEOftfB0A3-UvpiX5wRVsX/view>.
+
 ## Project Page
 
 The project page is available at <https://whywwwzzzg.github.io/MIEdit/>.
