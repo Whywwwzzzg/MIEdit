@@ -27,6 +27,7 @@ The code expects a CUDA-enabled PyTorch environment and local access to the requ
 
 - Stable Diffusion 3.5 Medium: download from the Hugging Face model page <https://huggingface.co/stabilityai/stable-diffusion-3.5-medium>. You may need to log in and accept the Stability AI license before downloading the model files.
 - PIE-Bench: download/register from the official PIE-Bench form <https://forms.gle/hVMkTABb4uvZVjme9>.
+- **Our Benchmark**: EditEval++ is available at <https://drive.google.com/file/d/1d1ekSATh2LWEOftfB0A3-UvpiX5wRVsX/view>.
 
 ## Example
 
@@ -39,10 +40,6 @@ python run_pie_bench.py \
   --target_path outputs/MIEdit_SD3.5 \
   --clip_model_path /path/to/clip-vit-large-patch14
 ```
-
-## Benchmark
-
-EditEval++ is available at <https://drive.google.com/file/d/1d1ekSATh2LWEOftfB0A3-UvpiX5wRVsX/view>.
 
 ## Project Page
 
